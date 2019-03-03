@@ -1,0 +1,28 @@
+{
+  "name": "docker-postgres-nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon node.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gislainy/docker-postgres-nodejs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gislainy/docker-postgres-nodejs/issues"
+  },
+  "homepage": "https://github.com/gislainy/docker-postgres-nodejs#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "faker": "^4.1.0",
+    "knex": "^0.16.3",
+    "nodemon": "^1.18.10",
+    "pg": "^7.8.1"
+  }
+}
