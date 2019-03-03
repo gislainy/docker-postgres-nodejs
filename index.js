@@ -42,7 +42,7 @@ const user = {
 new Users(user).save();
 
 
-app.get('/postgres', async (req, res) => {
+app.get('/', async (req, res) => {
   const userSelect = await knex('users').where({ email: user.email }).first();
   if (!userSelect)
     await knex('users')
