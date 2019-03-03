@@ -17,12 +17,43 @@ const config = {
 var knex = require('knex')(config);
 knex.migrate.latest([config]);
 
-app.get('/', async (req, res) => {
-  const user = {
-    name: faker.name.findName(),
-    email: faker.internet.email(),
-    password: faker.internet.password()
-  };
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://mongo:27017/docker', { useNewUrlParser: true })
+  .catch(e => {
+    console.log(e)
+    const msg = 'ERRO! Não foi possível conectar com o MongoDB!'
+    console.log('\x1b[41m%s\x1b[37m', msg, '\x1b[0m')
+  })
+var userSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  password: String,
+});
+
+var Users = mongoose.model('Users', userSchema);
+
+
+const user = {
+  name: faker.name.findName(),
+  email: faker.internet.email(),
+  password: faker.internet.password()
+};
+
+new Users(user).save();
+
+
+app.get('/postgres', async (req, res) => {
+  const userSelect = await knex('users').where({ email: user.email }).first();
+  if (!userSelect)
+    await knex('users')
+      .insert(user);
+  knex('users')
+    .select('id', 'name', 'email', 'admin')
+    .then(users => res.json(users))
+    .catch(err => res.status(500).send(err))
+});
+
+app.get('/mongo', async (req, res) => {
   const userSelect = await knex('users').where({ email: user.email }).first();
   if (!userSelect)
     await knex('users')
